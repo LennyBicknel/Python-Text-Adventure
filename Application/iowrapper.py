@@ -1,35 +1,15 @@
-from tkinter import *
-
 # ------iowrapper--------
-# Xander Lewis - 21/07/14
+# Xander Lewis - 21/08/14
 # -----------------------
+# This is a temporary placeholder for the tkinter GUI wrapper which will be capable of
+# text input, text output, and maybe some other stuff like showing a visual inventory.
+# Eventually this will be overwritten with the GUI wrapper, but the same strOut and
+# strIn functions will exist. (But they will control a graphical window)
 
-class Window(Frame):
-    def __init__(self, parent):
-        Frame.__init__(self, parent)
+def strOut(pString):
+    # Print passed string
+    print(pString)
 
-        self.parent = parent
-
-        self.initUI()
-
-    def initUI(self):
-        self.parent.title("Environment")
-        self.pack(fill = BOTH, expand = 1)
-
-        # Widgets: -------------------
-        outputText = Text(self, width = 50, height = 27).place(x = 5, y = 5)
-        inputText = Entry(self, width = 57).place(x = 5, y = 446)
-        enterButton = Button(self, width = 6).place(x = 355, y = 444)
-
-
-        self.pack()
-
-def main():
-    root = Tk()
-    root.geometry("600x470+300+300")
-    root.resizable(width=FALSE, height=FALSE)
-    app = Window(root)
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()
+def strIn(prompt):
+    # Print prompt and return user input
+    return input(pString)
