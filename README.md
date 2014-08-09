@@ -7,5 +7,4 @@ The application will begin as a very simple structure for a text adventure game,
 
 If you'd like to contribute at this stage of development, helping by refactoring code and leaving a helpful commit description explaining why the edited code is superior is very much appreciated.
 
-Master branch is for working releases, dev branch is for development of the next release.
-(Obviously)
+Currently there is only a master branch, however when the first working release is ready, a dev branch will be created and all work towards the next release will be done on there. The dev branch will be merged with the master when the release is complete and stable.
