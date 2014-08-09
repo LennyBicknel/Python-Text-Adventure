@@ -1,4 +1,4 @@
-import txtadvclasses
+import txtadvlib
 from iowrapper import *
 
 # ---------main----------
