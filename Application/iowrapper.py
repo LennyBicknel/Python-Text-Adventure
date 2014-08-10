@@ -7,9 +7,11 @@
 # strIn functions will exist. (But they will control a graphical window)
 
 def strOut(pString):
+    """Prints passed string to console."""
     # Print passed string
     print(pString)
 
 def strIn(prompt):
+    """Prints passed string and takes user input from console."""
     # Print prompt and return user input
-    return input(pString)
+    return input(prompt)
