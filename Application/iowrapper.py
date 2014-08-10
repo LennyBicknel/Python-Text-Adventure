@@ -1,5 +1,5 @@
 # ------iowrapper--------
-# Xander Lewis - 21/08/14
+# Xander Lewis - 09/08/14
 # -----------------------
 # This is a temporary placeholder for the tkinter GUI wrapper which will be capable of
 # text input, text output, and maybe some other stuff like showing a visual inventory.
