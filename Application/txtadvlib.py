@@ -1,4 +1,4 @@
-# -----txtadvclasses-----
+# -------txtadvlib-------
 # Xander Lewis - 08/08/14
 # -----------------------
 
