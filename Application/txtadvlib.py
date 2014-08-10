@@ -3,7 +3,7 @@
 # -----------------------
 
 class Env():
-    """An environment with an ID, a description, a list of items, and neighbouring environments."""
+    """An environment with an ID, a description, a list of item IDs, and neighbouring environments."""
     def __init__(self, ID, desc, items, left, front, right, back):
         self.ID = ID
         self.desc = desc
@@ -13,20 +13,20 @@ class Env():
         self.right = right
         self.back = back
 
-    def getID():
+    def getID(self):
         return self.ID
     
-    def getDesc():
+    def getDesc(self):
         return self.desc
     
-    def getItems():
+    def getItems(self):
         return self.items
     
-    def getNeighbour(loc):
-        if(loc == left): return left
-        elif(loc == front): return front
-        elif(loc == right): return right
-        elif(loc == back): return back
+    def getNeighbour(self, loc):
+        if(loc == "left"): return self.left
+        elif(loc == "front"): return self.front
+        elif(loc == "right"): return self.right
+        elif(loc == "back"): return self.back
         
     def takeItem(itemName):
         # Remove item from envs items list
@@ -38,45 +38,86 @@ class Env():
         # Return selected Item instance
         return itemSelected
 
+    def getLeft(self):
+        return self.left
+    
+    def getFront(self):
+        return self.front
+
+    def getRight(self):
+        return self.right
+
+    def getBack(self):
+        return self.back
+
 class Item():
     """An item with a name, a description and an action. It can be 'used' by calling the use() method."""
     def __init__(self, name, desc, action):
         self.name = name
         self.desc = desc
 
-    def getName():
+    def getName(self):
         return self.name
 
-    def getDesc():
+    def getDesc(self):
         return self.desc
 
-    def use():
+    def use(self):
         # [Will contain code executed when item is used (related to its action)]
         pass
 
 class Player():
-    """A player with a name, a location and a list of items called an 'inventory'."""
+    """A player with a name, a location, an hp (health points) value and a list of items called an 'inventory'."""
     def __init__(self, name):
         self.name = name
-        self.location = 0
+        self.loc = 0
+        self.hp = 500
         self.inventory = []
 
-    def getName():
+    def getName(self):
         return self.name
 
-    def getInv():
+    def getLoc(self):
+        return int(self.loc)
+    
+    def setLoc(self, newLoc):
+        self.loc = newLoc
+
+    def getHP(self):
+        return self.hp
+
+    def setHP(self, newHP):
+        self.hp == newHP
+
+    def changeHP(self, change):
+        self.hp += change
+
+    def getInv(self):
         return self.inventory
+    
+    def addToInv(self, item):
+        self.inv.append(item)
 
 # FUNCTIONS ---------------------------------------------------------------
 
-def loadEnvs(path):
+def loadEnvs(path, itemList):
     """Loads a set of envs from a file and returns a list of Env objects."""
     # Load list of lines in file
     with open(path, "r") as file:
         fileList = file.readlines()
 
-    # Split each line and create an instance of Env accordingly. Append that instance to envList.
-    envList = [Env(line.split("\t")[0], line.split("\t")[1], line.split("\t")[2], line.split("\t")[3], line.split("\t")[4], line.split("\t")[5], line.split("\t")[6]) for line in fileList]
+    # Iterate through the file two lines at a time, extracting env data
+    envList = []
+    for i in range(0, len(fileList), 2):
+        
+        # Create item list
+        if(fileList[i+1] != "NULL"):
+            items = [itemList[int(index)] for index in fileList[i+1].split("\t")]
+        else:
+            items = []
+            
+        # Create Envs
+        envList.append(Env(fileList[i].split("\t")[0], fileList[i].split("\t")[1], items, fileList[i].split("\t")[2], fileList[i].split("\t")[3], fileList[i].split("\t")[4], fileList[i].split("\t")[5]))
 
     # Return list of Env instances.
     return envList
@@ -92,3 +133,6 @@ def loadItems(path):
 
     # Return list of Item instances
     return itemList
+
+def createPlayer(name):
+    return Player(name)
