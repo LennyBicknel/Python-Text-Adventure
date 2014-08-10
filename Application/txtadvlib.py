@@ -28,12 +28,11 @@ class Env():
         elif(loc == "right"): return self.right
         elif(loc == "back"): return self.back
         
-    def takeItem(itemName):
+    def takeItem(self, itemName):
         # Remove item from envs items list
-        for i in range(len(items)):
-            if(items[i].getName() == itemName):
-                itemSelected = items[i]
-                items[i].pop()
+        for i in range(len(self.items)):
+            if(self.items[i].getName() == itemName):
+                itemSelected = self.items.pop(i)
                 
         # Return selected Item instance
         return itemSelected
@@ -72,7 +71,7 @@ class Player():
         self.name = name
         self.loc = 0
         self.hp = 500
-        self.inventory = []
+        self.inv = []
 
     def getName(self):
         return self.name
@@ -93,7 +92,7 @@ class Player():
         self.hp += change
 
     def getInv(self):
-        return self.inventory
+        return self.inv
     
     def addToInv(self, item):
         self.inv.append(item)

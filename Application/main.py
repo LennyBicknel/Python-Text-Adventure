@@ -35,8 +35,8 @@ def playerStatus(player, itemList):
         strOut("You are carrying nothing.")
     else:
         strOut("Inventory:")
-        for each in player.getInv():
-            strOut(itemList[each].getName())
+        for i in range(len(player.getInv())):
+            strOut(itemList[i].getName())
 
 def envDesc(envs, ID):
     strOut("\nYou look around...")
@@ -45,13 +45,13 @@ def envDesc(envs, ID):
 
     # If there is an env in a given direction, print its description
     if(envs[ID].getLeft().strip() != "NULL"):
-        strOut("\nTo your left, {0}".format(envs[int(envs[ID].getLeft())].getDesc()))
+        strOut("\nTo your left, {0}".format(envs[int(envs[ID].getLeft())].getDesc().lower()))
     if(envs[ID].getFront().strip() != "NULL"):
-        strOut("\nIn front of you, {0}".format(envs[int(envs[ID].getFront())].getDesc()))
+        strOut("\nIn front of you, {0}".format(envs[int(envs[ID].getFront())].getDesc().lower()))
     if(envs[ID].getRight().strip() != "NULL"):
-        strOut("\nTo your right, {0}".format(envs[int(envs[ID].getRight())].getDesc()))
+        strOut("\nTo your right, {0}".format(envs[int(envs[ID].getRight())].getDesc().lower()))
     if(envs[ID].getBack().strip() != "NULL"):
-        strOut("\nBehind you, {0}".format(envs[int(envs[ID].getBack())].getDesc()))
+        strOut("\nBehind you, {0}".format(envs[int(envs[ID].getBack())].getDesc().lower()))
 
     if(envs[ID].getItems() != []):
         strOut("\nYou see the following items:")
@@ -65,15 +65,15 @@ def evalCmd(cmd, player, envs):
                 strOut("You move left...")
                 player.setLoc(envs[player.getLoc()].getLeft())
             else:
-                strOut("You cannot move left.")
+                strIn("You cannot move left.")
                 
         # Moving forwards?
-        elif(cmd == "forwards" or cmd == "f"):
+        elif(cmd == "forwards"  or cmd == "forward" or cmd == "f"):
             if(envs[player.getLoc()].getFront().strip() != "NULL"):
                 strOut("You move forwards...")
                 player.setLoc(envs[player.getLoc()].getFront())
             else:
-                strOut("You cannot move forwards.")
+                strIn("You cannot move forwards.")
 
         # Moving right?
         elif(cmd == "right" or cmd == "r"):
@@ -81,7 +81,7 @@ def evalCmd(cmd, player, envs):
                 strOut("You move right...")
                 player.setLoc(envs[player.getLoc()].getRight())
             else:
-                strOut("You cannot move right.")
+                strIn("You cannot move right.")
 
         # Moving back?
         elif(cmd == "back" or cmd == "b"):
@@ -89,11 +89,23 @@ def evalCmd(cmd, player, envs):
                 strOut("You move back...")
                 player.setLoc(envs[player.getLoc()].getBack())
             else:
-                strOut("You cannot move back.")
+                strIn("You cannot move back.")
 
-        # Picking up an item?
+        # Taking up an item?
         elif(cmd[0:4] == "take"):
-            player.addToInv(envs[player.getLoc()].takeItem(cmd[5:]))
+            item = cmd[5:]
+            player.addToInv(envs[player.getLoc()].takeItem(item))
+
+        # Inspecting an item?
+        elif(cmd[0:7] == "inspect"):
+            item = cmd[8:]
+            itemNotFound = True
+            for i in range(len(player.getInv())):
+                if(player.getInv()[i].getName() == item):
+                    strIn(player.getInv()[i].getDesc())
+                    itemNotFound = False
+            if(itemNotFound):
+                strIn("You don't have that in your inventory.")
 
         # Something else?
         else:
